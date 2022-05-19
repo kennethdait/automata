@@ -6,8 +6,6 @@
  * + and hiding the active waitlisted behavioral health transfer requests, 
  * + which makes it easier to focus on the medical active transfers.
  * 
- * author: Kenneth Dait, kpdait@ascension.org
- * 
  */
 
  console.clear()
