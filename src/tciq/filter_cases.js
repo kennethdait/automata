@@ -15,7 +15,12 @@
      bhRows: [],
      allRows: [],
      nonBHRows: [],
-     getBehavioralHealthRows: function(){
+     init: function() {
+         this.bhRows = this.get_bh_rows()
+         this.allRows = this.get_all_rows()
+         this.nonBHRows = this.get_non_bh_rows()
+     },
+     get_bh_rows: function(){
          const ssc_identifier = 'div.text-ellipsis[title="SSC"]',
                dcmc_mhu_identifier = 'div[title="DC-2S-MHU"]',
                bhRowArr = [];
@@ -25,25 +30,25 @@
          }
          return bhRowArr
      },
-     getAllRows: function(){
+     get_all_rows: function(){
          return document.querySelectorAll('.react-grid-Canvas')[0].children[1].children;
      },
-     getNonBHRows: function(){
-         const allRows = this.getAllRows(),
-               bhRows = this.getBehavioralHealthRows(),
+     get_non_bh_rows: function(){
+         const allRows = this.get_all_rows(),
+               bhRows = this.get_bh_rows(),
                nonBHRows = [];
          for (row of allRows) {
              if (!bhRows.includes(row)) nonBHRows.push(row)
          }
          return nonBHRows
      },
-     getBehavioralHealthCaseCount: function() {
+     bhCaseCount: function() {
          return this.bhRows.length
      },
-     getAllRowsCount: function() {
+     allCaseCount: function() {
          return this.allRows.length
      },
-     getNonBHRowsCount: function() {
+     nonBHCaseCount: function() {
          return this.nonBHRows.length
      },
      init: function() {
@@ -51,23 +56,23 @@
          this.allRows = this.getAllRows()
          this.nonBHRows = this.getNonBHRows()
      },
-     hideBehavioralHealthRows: function(){
+     hideBHRows: function(){
          // hide behavioral health rows
          this.bhRows.forEach(el => el.style.display = "none");
          this.currentDisplayStatus = 'bhHidden'
-         return `now hiding ${this.getBehavioralHealthCaseCount()} behavioral health cases`
+         return `now hiding ${this.bhCaseCount()} behavioral health cases`
      },
-     showBehavioralHealthRows: function(){
+     showBHRows: function(){
          // show behavioral health rows
          this.bhRows.forEach(el => el.style.display = "inherit");
          this.currentDisplayStatus = 'full'
-         return `now displaying ${this.getBehavioralHealthCaseCount()} behavioral health cases`
+         return `now displaying ${this.bhCaseCount()} behavioral health cases`
      },
      printCountReport: function() {
          let output = '';
-         output += `TOTAL ROWS:                       ${this.getAllRowsCount()}`
-         output += `\nTOTAL BEHAVIORAL HEALTH ROWS:     ${this.getBehavioralHealthCaseCount()}`
-         output += `\nTOTAL NON-BEHAVIORAL HEALTH ROWS: ${this.getNonBHRowsCount()}`
+         output += `TOTAL ROWS:                       ${this.allCaseCount()}`
+         output += `\nTOTAL BEHAVIORAL HEALTH ROWS:     ${this.bhCaseCount()}`
+         output += `\nTOTAL NON-BEHAVIORAL HEALTH ROWS: ${this.nonBHCaseCount()}`
          output += `\ncurrent display status: ${omnitool.currentDisplayStatus}`
          console.log(output);
          //return output
@@ -79,10 +84,10 @@
      let output = "> "
      switch (omnitool.currentDisplayStatus) {
          case 'full':
-             output += omnitool.hideBehavioralHealthRows()
+             output += omnitool.hideBHRows()
              break
          case 'bhHidden':
-             output += omnitool.showBehavioralHealthRows()
+             output += omnitool.showBHRows()
              break
          default:
              break
