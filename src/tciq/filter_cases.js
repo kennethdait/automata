@@ -51,11 +51,6 @@
      nonBHCaseCount: function() {
          return this.nonBHRows.length
      },
-     init: function() {
-         this.bhRows = this.getBehavioralHealthRows()
-         this.allRows = this.getAllRows()
-         this.nonBHRows = this.getNonBHRows()
-     },
      hideBHRows: function(){
          // hide behavioral health rows
          this.bhRows.forEach(el => el.style.display = "none");
